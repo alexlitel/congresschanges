@@ -1,0 +1,42 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "<alexlitel@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn dev:start",
+    "prod:build": "rimraf lib dist && babel src -d lib --ignore .test.js",
+    "prod:start": "heroku local",
+    "lint": "eslint --fix src --ext .js",
+    "test": "yarn lint && jest --coverage",
+    "heroku-postbuild": "yarn prod:build",
+    "precommit": "yarn test",
+    "prepush": "yarn test && yarn prod:build"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "bluebird": "^3.5.0",
+    "dotenv": "^4.0.0",
+    "redis": "^2.8.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^22.0.4",
+    "babel-plugin-syntax-class-properties": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "^0.14.3",
+    "jest": "^22.0.4",
+    "nock": "^9.0.21",
+    "redis-mock": "^0.20.0"
+  }
+}
