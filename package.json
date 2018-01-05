@@ -14,6 +14,10 @@
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
+  "engines": {
+    "node": "9.x",
+    "yarn": "1.x"
+  },
   "dependencies": {
     "babel-core": "^6.26.0",
     "bluebird": "^3.5.0",
