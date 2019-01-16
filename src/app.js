@@ -3,13 +3,22 @@ import bluebird from 'bluebird'
 
 class App {
   static changeToText(key, change) {
+    if (change.party === 'N/A') {
+      change.party = 'N/P'
+    }
   	let text = [key.charAt(0).toUpperCase(), key.slice(1).toLowerCase(), ':'].join('')
   	if (change.type === 'member') {
-  		text = [text, `${change.chamber === 'senate' ? 'Sen' : 'Rep'}.
-  						${change.name}
-  						(${change.party}-${change.state})`.replace(/\n\s+/g, ' '),
+      let title = change.chamber === 'senate' ? 'Sen.' : 'Rep.'
+      if (/^(AS|DC|GU|MP|PR|VI)/.test(change.state)) {
+        title = 'Del.'
+      }
+      text = [
+        text,
+        title,
+        change.name,
+  						`(${change.party}-${change.state})`,
   				].join(' ')
-  	} else if (change.type === 'committee') {
+  	} else {
   		text = [text, change.name.replace('Committee', 'Cmte.')].join(' ')
   		if (change.party) text = [text, `(${change.party})`].join(' ')
   	}

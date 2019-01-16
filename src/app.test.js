@@ -81,10 +81,24 @@ describe('App class methods', () => {
           account_type: 'office',
           screen_name: 'FooAccount',
           type: 'committee',
+          party: 'N/A',
           name: 'House Committee on Stuff',
           chamber: 'senate',
         }
-        expect(App.changeToText('deactivated', change)).toEqual('Deactivated: House Cmte. on Stuff office account "FooAccount"')
+        expect(App.changeToText('deactivated', change)).toEqual('Deactivated: House Cmte. on Stuff (N/P) office account "FooAccount"')
+      })
+
+      test('Parses delegate change', () => {
+        const change = {
+          account_type: 'office',
+          screen_name: 'FooAccount',
+          type: 'member',
+          state: 'PR',
+          party: 'D',
+          name: 'Person Name',
+          chamber: 'house',
+        }
+        expect(App.changeToText('deactivated', change)).toEqual('Deactivated: Del. Person Name (D-PR) office account "FooAccount"')
       })
 
       test('Parses reactivated and deactivated accounts', () => {
