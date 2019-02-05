@@ -1,3 +1,5 @@
 # Congress Changes
 
-Simple Twitter bot for tracking changes to accounts that are a part of the [Tweets of Congress site](https://github.com/alexlitel/congresstweets) project. It's pretty much built for the specific use case of interacting with the Redis data store from the [backend portion of the Tweets of Congress project](https://github.com/alexlitel/congresstweets-automator).
+[Congress Changes](https://www.twitter.com/congresschanges) is a simple Twitter bot written in NodeJS that tweets out changes to congressional accounts – specifically, renames, deactivations, and reactivations — identified as part of the [Congressional Tweet Automator](https://github.com/alexlitel/congresstweets-automator)/scraper's daily self-maintenance process that checks for any changes to the underlying user/member dataset. 
+
+A script checks the Redis store for changes created by the aforementioned self-maintenance process. If changes exist in the store, the script iterates through those changes, converting the changes (stored as an object) to a formatted string with some minor text substitution, and then deletes the changes from the store so the script can run again the next day.
