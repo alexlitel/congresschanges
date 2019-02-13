@@ -124,6 +124,19 @@ describe('App class methods', () => {
         }
         expect(App.changeToText('renamed', change)).toEqual('Renamed: House Cmte. on Stuff office account\n"Foo"=>"FooAccount"')
       })
+
+      test('Parses private accounts', () => {
+        const change = {
+          account_type: 'office',
+          state: 'NJ',
+          party: 'R',
+          screen_name: 'FooAccount',
+          type: 'member',
+          name: 'Doug Berry',
+          chamber: 'senate',
+        }
+        expect(App.changeToText('private', change)).toEqual('Sen. Doug Berry (R-NJ) made their office account "FooAccount" private, denying constituents and others easy access to communications of current and historical value')
+      })
     })
   })
 
