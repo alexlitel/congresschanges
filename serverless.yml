@@ -1,0 +1,113 @@
+service: congresschanges
+app: congresschanges
+org: alexlitel
+
+package:
+  individually: true
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-offline-sns
+  - serverless-s3-local
+  - serverless-pseudo-parameters
+
+custom:
+  serverless-offline:
+    port: 3000
+  serverless-offline-sns:
+    port: 3001
+  serverless-s3-local:
+    port: 3002
+    directory: /tmp
+  webpack:
+    webpackConfig: ./webpack.config.js
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  memorySize: 512
+  environment:
+    BUCKET:
+      Ref: changeBucket
+    CHANGE_SNS:
+      Ref: listChangesTopic
+    UPDATE_SNS:
+      Ref: usersUpdatedTopic
+    CONSUMER_API_KEY: ${param:CONSUMER_API_KEY}
+    CONSUMER_API_SECRET: ${param:CONSUMER_API_SECRET}
+    BOT_ACCESS_TOKEN: ${param:BOT_ACCESS_TOKEN}
+    BOT_ACCESS_TOKEN_SECRET: ${param:BOT_ACCESS_TOKEN_SECRET}
+    LIST_ACCESS_TOKEN: ${param:LIST_ACCESS_TOKEN}
+    LIST_ACCESS_TOKEN_SECRET: ${param:LIST_ACCESS_TOKEN_SECRET}
+    LIST_ID: ${param:LIST_ID}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - Ref: changeBucket
+            - '/*'
+    - Effect: Allow
+      Action:
+        - sns:Publish
+        - sns:Receive
+      Resource: 
+        - arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:usersUpdated
+        - arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:listChanges
+
+resources:
+ Resources:
+  changeBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: congresschanges
+  listChangesTopic:
+    Type: AWS::SNS::Topic
+    Properties: 
+      DisplayName: listChanges
+      TopicName: listChanges
+  usersUpdatedTopic:
+    Type: AWS::SNS::Topic
+    Properties: 
+      DisplayName: usersUpdated
+      TopicName: usersUpdated
+
+functions:
+  updateData:
+    handler: src/handlers/updateData.handler
+    events:
+      - sns:
+          arn: !Ref usersUpdatedTopic
+          topicName: usersUpdated
+  apiEndpoint:
+    handler: src/handlers/apiEndpoint.handler
+    events:
+      - http:
+          path: update
+          method: get
+          cors: true
+          private: true
+  checkList:
+    handler: src/handlers/checkList.handler
+    events:
+      - schedule:
+          rate: rate(10 minutes)
+          enabled: true
+    layers:
+      - ${param:CANVAS_LIB64_ARN}
+      - ${param:CANVAS_NODE_ARN}          
+  tweetChanges:
+    handler: src/handlers/tweetChanges.handler
+    events:
+      - sns:
+          arn: !Ref listChangesTopic
+          topicName: listChanges
+    layers:
+      - ${param:CANVAS_LIB64_ARN}
+      - ${param:CANVAS_NODE_ARN}

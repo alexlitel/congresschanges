@@ -14,33 +14,50 @@
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ]
+  },
   "engines": {
-    "node": "9.x",
+    "node": "13.x",
     "yarn": "1.x"
   },
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "bluebird": "^3.5.0",
-    "dotenv": "^4.0.0",
-    "redis": "^2.8.0",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "dotenv": "^8.2.0",
+    "node-emoji": "alexlitel/node-emoji#custom",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-jest": "^22.0.4",
-    "babel-plugin-syntax-class-properties": "^6.13.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "coveralls": "^3.0.0",
-    "eslint": "^4.7.2",
-    "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0",
-    "husky": "^0.14.3",
-    "jest": "^22.0.4",
-    "nock": "^9.0.21",
-    "redis-mock": "^0.20.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "aws-sdk": "^2.619.0",
+    "babel-loader": "^8.0.6",
+    "canvas": "^2.6.1",
+    "copy-webpack-plugin": "^5.1.1",
+    "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.1",
+    "jest": "^25.1.0",
+    "nock": "^11.7.2",
+    "node-loader": "^0.6.0",
+    "prettier": "^1.19.1",
+    "serverless": "^1.62.0",
+    "serverless-offline": "^5.12.1",
+    "serverless-offline-sns": "^0.68.0",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "serverless-s3-local": "^0.5.4",
+    "serverless-webpack": "^5.3.1",
+    "webpack": "^4.41.5",
+    "webpack-node-externals": "^1.7.2"
   }
 }
