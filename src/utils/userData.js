@@ -1,6 +1,14 @@
 import request from 'request-promise-native'
 import { DATASET_URL } from '../config'
 
+const findUrl = (key, entities, shortUrl) => {
+  const urlMatch = entities[key].urls.find(x => x.url === shortUrl)
+  return (urlMatch.expanded_url || urlMatch.url).replace(
+    /http(s)?:\/\/(www\.)?/i,
+    ''
+  )
+}
+
 export const normalizeListData = listUsers =>
   listUsers.reduce((acc, acct) => {
     const {
@@ -16,14 +24,10 @@ export const normalizeListData = listUsers =>
       profile_banner_url: banner
     } = acct
 
-    const newUrl = url
-      ? entities.url.urls.find(x => x.url === url).expanded_url
-      : ''
+    const newUrl = url ? findUrl('url', entities, url) : ''
     const newDescription = description
-      .replace(
-        /http(s)?:\/{2}t.co\/.+?\b/g,
-        shortUrl =>
-          entities.description.urls.find(x => x.url === shortUrl).expanded_url
+      .replace(/http(s)?:\/{2}t.co\/.+?\b/g, shortUrl =>
+        findUrl('description', entities, shortUrl)
       )
       .replace(/\n+/g, ' ')
       .replace(/\s{2,}/g, ' ')
