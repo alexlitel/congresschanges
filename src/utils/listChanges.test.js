@@ -1,3 +1,4 @@
+/* global mockChanges */
 import { getPropDiffs, checkForListChanges } from './listChanges'
 
 describe('List change utilities', () => {
@@ -47,7 +48,7 @@ describe('List change utilities', () => {
         }
       )
       expect(propDiffs).toHaveLength(1)
-      expect(propDiffs[0]).toEqual({
+      expect(propDiffs[0]).toStrictEqual({
         changeType: 'protected',
         oldVal: false,
         newVal: true

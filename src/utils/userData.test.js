@@ -29,7 +29,7 @@ describe('User data utilities', () => {
       ]
       const normalized = normalizeListData(listData)
       expect(normalized).toHaveProperty('abc')
-      expect(normalized.abc).toEqual(
+      expect(normalized.abc).toStrictEqual(
         expect.objectContaining({
           idStr: 'abc',
           description: 'Foo cool.com',

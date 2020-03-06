@@ -1,6 +1,7 @@
 import emoji from 'node-emoji'
 import request from 'request-promise-native'
 import { createCanvas, Image, registerFont } from 'canvas'
+import { FONT_PATH } from '../config'
 
 const wrapDescriptionWord = (word, canvasWidth, ctx) =>
   [...word].reduce(
@@ -25,9 +26,7 @@ const wrapDescriptionString = (description, ctx, canvasWidth) => {
         const lastString = wrappedString[wrappedString.length - 1]
         const textLength = ctx.measureText(`${lastString} ${currString}`)
         if (textLength.width < canvasWidth) {
-          wrappedString[
-            wrappedString.length - 1
-          ] = `${lastString}${currString}`
+          wrappedString[wrappedString.length - 1] = `${lastString}${currString}`
         } else {
           wrappedString[wrappedString.length - 1] = lastString.trim()
           const longStringWithBreaks = wrapDescriptionWord(
@@ -95,7 +94,7 @@ export const drawImagesOnCanvas = (ctx, changeType, images) => {
 
 export const createImage = async change => {
   try {
-    registerFont('./src/static/fonts/SourceSansPro-Regular.ttf', {
+    registerFont(`${FONT_PATH}/SourceSansPro-Regular.ttf`, {
       family: 'sans-serif'
     })
     const { oldVal, newVal, changeType } = change

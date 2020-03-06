@@ -9,7 +9,7 @@ describe('String utilities', () => {
         name: 'Test Committee on Stuff',
         party: 'D'
       }
-      expect(normalizeName(change)).toEqual('Test Cmte. on Stuff (D)')
+      expect(normalizeName(change)).toBe('Test Cmte. on Stuff (D)')
     })
     test('Normalizes caucus name', () => {
       const change = {
@@ -18,7 +18,7 @@ describe('String utilities', () => {
         name: 'Caucus on Stuff',
         party: 'D'
       }
-      expect(normalizeName(change)).toEqual('Caucus on Stuff (D)')
+      expect(normalizeName(change)).toBe('Caucus on Stuff (D)')
     })
     test('Normalizes house rep name', () => {
       const change = {
@@ -28,7 +28,7 @@ describe('String utilities', () => {
         party: 'I',
         state: 'CA'
       }
-      expect(normalizeName(change)).toEqual('Rep. Test Person (I-CA)')
+      expect(normalizeName(change)).toBe('Rep. Test Person (I-CA)')
     })
     test('Normalizes house delegate name', () => {
       const change = {
@@ -38,7 +38,7 @@ describe('String utilities', () => {
         party: 'I',
         state: 'VI'
       }
-      expect(normalizeName(change)).toEqual('Del. Test Person (I-VI)')
+      expect(normalizeName(change)).toBe('Del. Test Person (I-VI)')
     })
     test('Normalizes senator name', () => {
       const change = {
@@ -48,7 +48,7 @@ describe('String utilities', () => {
         party: 'I',
         state: 'CA'
       }
-      expect(normalizeName(change)).toEqual('Sen. Test Person (I-CA)')
+      expect(normalizeName(change)).toBe('Sen. Test Person (I-CA)')
     })
   })
   describe('buildString', () => {
@@ -95,7 +95,7 @@ describe('String utilities', () => {
         },
         change
       )
-      expect(changeString).toEqual(
+      expect(changeString).toBe(
         'Username: Caucus (D) office account\n\n"Test" => "TestNew"'
       )
     })
@@ -135,7 +135,7 @@ describe('String utilities', () => {
     })
   })
   describe('buildAltTextString', () => {
-    test('Handles description ', () => {
+    test('Handles description', () => {
       const change = {
         changeType: 'description',
         oldVal: 'blah',
@@ -150,7 +150,7 @@ describe('String utilities', () => {
 
       expect(buildAltTextString(change, change)).toContain('old description')
     })
-    test('Handles banner ', () => {
+    test('Handles banner', () => {
       const change = {
         changeType: 'banner',
         oldVal: 'blah',
@@ -165,7 +165,7 @@ describe('String utilities', () => {
 
       expect(buildAltTextString(change, change)).toContain('header image')
     })
-    test('Handles avatar ', () => {
+    test('Handles avatar', () => {
       const change = {
         changeType: 'avatar',
         oldVal: 'blah',

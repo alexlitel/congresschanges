@@ -24,9 +24,7 @@ module.exports = {
       amd: 'aws-sdk'
     }
   },
-  plugins: [
-    new CopyPlugin([{ from: './src/static/fonts', to: './src/static/fonts' }])
-  ],
+  plugins: [new CopyPlugin([{ from: './src/static/fonts', to: 'fonts' }])],
   module: {
     rules: [
       {

@@ -1,15 +1,21 @@
 {
     "extends": [
+        "plugin:jest/all",
         "standard",
         "prettier"
     ],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "jest"],
       "rules": {
-          "prettier/prettier": "error"
+          "prettier/prettier": "error",
+          "jest/no-hooks": 0,
+          "jest/prefer-expect-assertions": 0,
+          "jest/lowercase-name": 0,
+          "jest/consistent-test-it": ["error", {"fn": "test"}]
     },
     "env": {
         "browser": false,
-        "jest": true
+        "jest": true,
+        "jest/globals": true
     },
     "settings": {
     }
