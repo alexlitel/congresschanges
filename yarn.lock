@@ -7060,6 +7060,7 @@ node-emoji@alexlitel/node-emoji#custom:
   resolved "https://codeload.github.com/alexlitel/node-emoji/tar.gz/4446b4b40efe417ec25f691ad43e784e93771ee4"
   dependencies:
     emoji.json "^12.1.0"
+    graphemesplit "^2.2.0"
     ow "^0.15.0"
 
 node-fetch@^1.0.1, node-fetch@^1.7.3:

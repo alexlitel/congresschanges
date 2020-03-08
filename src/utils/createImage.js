@@ -3,44 +3,53 @@ import request from 'request-promise-native'
 import { createCanvas, Image, registerFont } from 'canvas'
 import { FONT_PATH } from '../config'
 
-const wrapDescriptionWord = (word, canvasWidth, ctx) =>
+registerFont(`${FONT_PATH}/SourceSansPro-Regular.ttf`, {
+  family: 'sans-serif'
+})
+
+export const wrapDescriptionWord = (word, measureFn) =>
   [...word].reduce(
     (chars, char) => {
-      const stringWidth = ctx.measureText(chars[chars.length - 1] + char)
-      if (stringWidth.width > canvasWidth) {
-        chars.push(char)
-      } else {
+      const combinedChars = chars[chars.length - 1] + char
+      if (measureFn(combinedChars)) {
         chars[chars.length - 1] += char
+      } else {
+        chars.push(char)
       }
       return chars
     },
     ['']
   )
 
-const wrapDescriptionString = (description, ctx, canvasWidth) => {
-  const str = emoji.unemojify(description).replace(/(\n+|\s+)/g, ' ')
-
-  return [...str]
+export const wrapDescriptionString = (description, measureFn) => {
+  return emoji
+    .unemojify(description)
+    .replace(/(\n+|\s+)/g, ' ')
+    .split(' ')
     .reduce(
       (wrappedString, currString) => {
         const lastString = wrappedString[wrappedString.length - 1]
-        const textLength = ctx.measureText(`${lastString} ${currString}`)
-        if (textLength.width < canvasWidth) {
-          wrappedString[wrappedString.length - 1] = `${lastString}${currString}`
+        const combinedString = `${lastString} ${currString}`.trim()
+        if (measureFn(combinedString)) {
+          wrappedString[wrappedString.length - 1] = combinedString
         } else {
           wrappedString[wrappedString.length - 1] = lastString.trim()
-          const longStringWithBreaks = wrapDescriptionWord(
-            currString,
-            canvasWidth,
-            ctx
-          )
-          wrappedString.push(...longStringWithBreaks)
+          if (measureFn(currString)) {
+            wrappedString.push(currString)
+          } else {
+            const longStringWithBreaks = wrapDescriptionWord(
+              currString,
+              measureFn
+            )
+            wrappedString.push(...longStringWithBreaks)
+          }
         }
         return wrappedString
       },
       ['']
     )
     .join('\n')
+    .trim()
 }
 
 export const getImage = async (changeType, imageUrl, isNew) => {
@@ -94,9 +103,6 @@ export const drawImagesOnCanvas = (ctx, changeType, images) => {
 
 export const createImage = async change => {
   try {
-    registerFont(`${FONT_PATH}/SourceSansPro-Regular.ttf`, {
-      family: 'sans-serif'
-    })
     const { oldVal, newVal, changeType } = change
     const resolution = getResolution(changeType)
     const canvas = createCanvas(...resolution)
@@ -105,7 +111,6 @@ export const createImage = async change => {
     ctx.fillRect(0, 0, ...resolution)
     ctx.fillStyle = 'black'
     ctx.font = '32px sans-serif'
-
     const images =
       changeType === 'description'
         ? []
@@ -115,8 +120,14 @@ export const createImage = async change => {
           ]
 
     if (changeType === 'description') {
+      const printableWidth = canvas.width - 100
       const description = [oldVal || '', newVal]
-        .map(val => wrapDescriptionString(val, ctx, canvas.width - 100))
+        .map(val =>
+          wrapDescriptionString(
+            val,
+            str => ctx.measureText(str).width <= printableWidth
+          )
+        )
         .join(`\n\n${' '.repeat(72)}↓\n\n`)
       const newHeight =
         100 + Math.ceil(ctx.measureText(description).actualBoundingBoxDescent)
