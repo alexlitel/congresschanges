@@ -35,7 +35,7 @@ export const uploadImage = async image => {
       })
     ).media_id_string
   } catch (e) {
-    console.log(e)
+    console.log('Upload image error', e)
     return null
   }
 }
@@ -56,6 +56,7 @@ export const createImageUpload = async (image, altText) => {
     await uploadImageAltText(mediaId, altText)
     return mediaId
   } catch (e) {
+    console.log('Create image upload error', e)
     return null
   }
 }
