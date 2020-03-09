@@ -8,14 +8,21 @@
     "start": "dev:start",
     "prod:build": "rimraf lib dist && babel src -d lib --ignore .test.js",
     "lint": "eslint --fix src --ext .js",
-    "test": "lint && jest --coverage",
-    "precommit": "test",
-    "prepush": "test && prod:build"
+    "test": "eslint src && jest"
   },
   "jest": {
     "setupFilesAfterEnv": [
       "./src/setupTests.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/junk"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test",
+      "pre-push": "npm run test"
+    }
   },
   "engines": {
     "node": "13.x",
