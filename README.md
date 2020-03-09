@@ -1,6 +1,6 @@
 # Congress Changes
 
-[Congress Changes](https://www.twitter.com/congresschanges) is a bot/small app written in NodeJS that tweets out changes to congressional accounts - renames, deactivations, reactivations, accounts made private, header images, URLs, descriptions and profile pictures.
+[Congress Changes](https://www.twitter.com/congresschanges) is a bot/small app written in NodeJS that tweets out changes to congressional accounts - renames, deactivations, test reactivations, accounts made private, header images, URLs, descriptions and profile pictures.
 
 Originally, the bot discovered changes as part of the [Congressional Tweet Automator](https://github.com/alexlitel/congresstweets-automator)/scraper's daily self-maintenance process that checks for any changes to the underlying user/member dataset, and relied on a Redis store and ran on Heroku. But I revamped the code to run as a Serverless app to encompass more types of changes and run more frequently (about every 10 minutes vs once a day), and use an S3 JSON file to maintain state + SNS services to communicate through the various parts. It still, however, relies on the same Twitter list and user dataset as the Tweet Automator.
 
