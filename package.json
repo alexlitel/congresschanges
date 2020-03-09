@@ -5,14 +5,12 @@
   "author": "<alexlitel@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn dev:start",
+    "start": "dev:start",
     "prod:build": "rimraf lib dist && babel src -d lib --ignore .test.js",
-    "prod:start": "heroku local",
     "lint": "eslint --fix src --ext .js",
-    "test": "yarn lint && jest --coverage",
-    "heroku-postbuild": "yarn prod:build",
-    "precommit": "yarn test",
-    "prepush": "yarn test && yarn prod:build"
+    "test": "lint && jest --coverage",
+    "precommit": "test",
+    "prepush": "test && prod:build"
   },
   "jest": {
     "setupFilesAfterEnv": [
