@@ -11,8 +11,8 @@ export const handler = async () => {
   if (bucketData.accounts) {
     const oldAccts = Object.keys(bucketData.accounts)
     const newAccts = Object.keys(userData.accounts)
-    const removed = Object.keys(oldAccts).filter(key => !newAccts.includes(key))
-    const added = Object.keys(newAccts).filter(key => !oldAccts.includes(key))
+    const removed = oldAccts.filter(key => !newAccts.includes(key))
+    const added = newAccts.filter(key => !oldAccts.includes(key))
     newData.dataUpdates = [...removed, ...added]
   }
 
