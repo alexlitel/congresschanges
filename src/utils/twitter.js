@@ -9,7 +9,7 @@ const twitterApiInstance = request.defaults({
   json: true
 })
 
-export const listApiRequest = twitterApiInstance.defaults({
+const listApiRequest = twitterApiInstance.defaults({
   oauth: LIST_TWITTER_CONFIG
 })
 

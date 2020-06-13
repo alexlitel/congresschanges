@@ -91,9 +91,8 @@ functions:
     events:
       - http:
           path: update
-          method: get
+          method: post
           cors: true
-          private: true
   checkList:
     handler: src/handlers/checkList.handler
     events:

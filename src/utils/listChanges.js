@@ -3,8 +3,7 @@ import { checkIfSuspended } from './twitter'
 export const normalizePropValue = val =>
   String(val)
     .toLowerCase()
-    .replace(/\n+/g, ' ')
-    .replace(/\s+/g, ' ')
+    .replace(/(\W|_)/g, '')
 
 export const getPropDiffs = (newRecord, oldRecord) => {
   return Object.keys(newRecord).reduce((diffs, key) => {
