@@ -3582,10 +3582,10 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
-emoji.json@^12.1.0:
-  version "12.1.1"
-  resolved "https://registry.yarnpkg.com/emoji.json/-/emoji.json-12.1.1.tgz#fd0fb150fbafd6a8260ac6b28fce4a777abf75fa"
-  integrity sha512-oW/iqLXVeJM6aRWVLyz/cJ9BZXYQu2RnKsQOi8S9Vd6BM8pc9Hud42MV36r7f3OQVXf3FbfQZrCUz3mvKAMFIA==
+emoji.json@latest:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/emoji.json/-/emoji.json-13.1.0.tgz#116e46dc57c97af7ec2605ec88cfff31e9bcbade"
+  integrity sha512-ibJCYVe3Ilic4euofl0ozWqkmqXXsCuhuOuwhwAoG9qsMizNGI8aa7P4QIKlZ8NLgXx+pnVT2t6ZTvQczIv/ZA==
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -7055,11 +7055,11 @@ node-dir@^0.1.17:
   dependencies:
     minimatch "^3.0.2"
 
-node-emoji@alexlitel/node-emoji#custom:
+"node-emoji@https://github.com/alexlitel/node-emoji.git#custom":
   version "2.0.0"
-  resolved "https://codeload.github.com/alexlitel/node-emoji/tar.gz/4446b4b40efe417ec25f691ad43e784e93771ee4"
+  resolved "https://github.com/alexlitel/node-emoji.git#2a32b8a1c148edb83a3c1ac092a0d9794d677bfc"
   dependencies:
-    emoji.json "^12.1.0"
+    emoji.json latest
     graphemesplit "^2.2.0"
     ow "^0.15.0"
 
