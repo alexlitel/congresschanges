@@ -104,6 +104,8 @@ functions:
       - ${param:CANVAS_NODE_ARN}          
   tweetChanges:
     handler: src/handlers/tweetChanges.handler
+    timeout: 250
+    reservedConcurrency: 1
     events:
       - sns:
           arn: !Ref listChangesTopic

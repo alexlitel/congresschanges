@@ -35,7 +35,9 @@ export const handler = async () => {
       dataUpdates
     )
 
-    if (Object.keys(changes).length) {
+    const hasChanges = !!Object.keys(changes).length
+
+    if (hasChanges || dataUpdates.length) {
       const newData = {
         ...bucketData,
         list: listData
@@ -44,9 +46,13 @@ export const handler = async () => {
       if (newData.dataUpdates) delete newData.dataUpdates
 
       await writeBucketData(newData)
+    }
+
+    if (hasChanges) {
+      const iterableChanges = Object.values(changes)
       await publishSnsChanges({
         TopicArn: CHANGE_SNS,
-        Message: JSON.stringify(changes)
+        Message: JSON.stringify(iterableChanges)
       })
     }
 
