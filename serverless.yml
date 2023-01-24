@@ -25,7 +25,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs18.x
   region: us-west-2
   memorySize: 512
   environment:
@@ -59,8 +59,8 @@ provider:
         - sns:Publish
         - sns:Receive
       Resource: 
-        - arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:usersUpdated
-        - arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:listChanges
+        - arn:aws:sns:${aws:region}:${aws:accountId}:usersUpdated
+        - arn:aws:sns:${aws:region}:${aws:accountId}:listChanges
 
 resources:
  Resources:
@@ -100,8 +100,7 @@ functions:
           rate: rate(10 minutes)
           enabled: true
     layers:
-      - ${param:CANVAS_LIB64_ARN}
-      - ${param:CANVAS_NODE_ARN}          
+      - arn:aws:lambda:${aws:region}:${aws:accountId}:layer:canvas-nodejs:1      
   tweetChanges:
     handler: src/handlers/tweetChanges.handler
     timeout: 250
@@ -111,5 +110,4 @@ functions:
           arn: !Ref listChangesTopic
           topicName: listChanges
     layers:
-      - ${param:CANVAS_LIB64_ARN}
-      - ${param:CANVAS_NODE_ARN}
+      - arn:aws:lambda:${aws:region}:${aws:accountId}:layer:canvas-nodejs:1

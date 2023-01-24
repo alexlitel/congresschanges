@@ -9,7 +9,7 @@ export const BUCKET = process.env.BUCKET || 'test'
 export const CHANGE_SNS = process.env.CHANGE_SNS || 'test'
 export const UPDATE_SNS = process.env.UPDATE_SNS || 'test'
 export const DATASET_URL =
-  'https://raw.githubusercontent.com/alexlitel/congresstweets-automator/master/data/users-filtered.json'
+  'https://raw.githubusercontent.com/alexlitel/congresstweets-accounts/master/users-filtered.json'
 
 export const TWITTER_APP_CONFIG = {
   consumer_key: process.env.CONSUMER_API_KEY || 'test',

@@ -10,21 +10,11 @@ module.exports = {
     minimize: false
   },
   devtool: false,
-  externals: {
-    canvas: {
-      root: 'canvas',
-      commonjs2: 'canvas',
-      commonjs: 'canvas',
-      amd: 'canvas'
-    },
-    'aws-sdk': {
-      root: 'aws-sdk',
-      commonjs2: 'aws-sdk',
-      commonjs: 'aws-sdk',
-      amd: 'aws-sdk'
-    }
-  },
-  plugins: [new CopyPlugin([{ from: './src/static/fonts', to: 'fonts' }])],
+  externals: ['canvas'],
+  plugins: [new CopyPlugin(
+    { patterns: [{ from: './src/static/fonts', to: 'fonts' }]
+  }) 
+  ],
   module: {
     rules: [
       {
@@ -39,7 +29,7 @@ module.exports = {
                   '@babel/env',
                   {
                     targets: {
-                      node: '12.15.0'
+                      node: '18.0'
                     }
                   }
                 ]
