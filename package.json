@@ -62,7 +62,7 @@
     "serverless-pseudo-parameters": "^2.6.1",
     "serverless-s3-local": "^0.7.1",
     "serverless-webpack": "^5.11.0",
-    "webpack": "^5.75.0",
+    "webpack": "^5.76.0",
     "webpack-node-externals": "^3.0.0"
   },
   "resolutions": {
